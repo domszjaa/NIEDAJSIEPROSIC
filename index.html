@@ -23,7 +23,7 @@
       display: flex;
       justify-content: center;
       gap: 60px;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
 
     .option {
@@ -53,11 +53,6 @@
       position: absolute;
     }
 
-    .gif {
-      width: 300px;
-      margin-top: 20px;
-    }
-
     #message {
       font-size: 48px;
       color: hotpink;
@@ -81,15 +76,27 @@
     }
 
     @keyframes floatUp {
-      from {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      to {
-        transform: translateY(-300px);
-        opacity: 0;
-      }
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(-300px); opacity: 0; }
     }
+
+    .gif {
+      width: 300px;
+      margin-top: 20px;
+      transition: transform 0.3s;
+    }
+
+    .gif.jump {
+      animation: jump 0.6s ease;
+    }
+
+    @keyframes jump {
+      0% { transform: translateY(0); }
+      30% { transform: translateY(-50px); }
+      60% { transform: translateY(0); }
+      100% { transform: translateY(0); }
+    }
+
   </style>
 </head>
 <body>
@@ -105,30 +112,31 @@
   <div id="message">Yay! Idziemy na spacer! 🐕💖</div>
 
   <img
+    id="dog"
     class="gif"
-    src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif"
-    alt="Słodki piesek robiący oczka"
+    src="https://cdn.pixabay.com/animation/2024/02/03/18/14/18-14-18-72_512.gif"
+    alt="Berneński pies pasterski robiący słodkie oczy"
   >
 
   <script>
     const no = document.getElementById("no");
     const yes = document.getElementById("yes");
     const message = document.getElementById("message");
+    const dog = document.getElementById("dog");
 
     no.addEventListener("mouseover", () => {
       const maxX = window.innerWidth - no.offsetWidth;
       const maxY = window.innerHeight - no.offsetHeight;
-
       no.style.left = Math.random() * maxX + "px";
       no.style.top = Math.random() * maxY + "px";
     });
 
     yes.addEventListener("click", () => {
       message.classList.add("show");
-
-      for (let i = 0; i < 15; i++) {
-        createHeart();
-      }
+      for (let i = 0; i < 15; i++) createHeart();
+      dog.classList.remove("jump"); 
+      void dog.offsetWidth;
+      dog.classList.add("jump");
     });
 
     function createHeart() {
@@ -138,10 +146,7 @@
       heart.style.left = Math.random() * window.innerWidth + "px";
       heart.style.animationDuration = 2 + Math.random() * 1.5 + "s";
       document.body.appendChild(heart);
-
-      setTimeout(() => {
-        heart.remove();
-      }, 3000);
+      setTimeout(() => heart.remove(), 3000);
     }
   </script>
 
