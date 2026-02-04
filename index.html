@@ -23,7 +23,7 @@
       display: flex;
       justify-content: center;
       gap: 60px;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
 
     .option {
@@ -31,9 +31,9 @@
       font-weight: bold;
       cursor: pointer;
       user-select: none;
+      transition: transform 0.2s, box-shadow 0.2s;
       padding: 15px 30px;
       border-radius: 20px;
-      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     #yes {
@@ -50,7 +50,6 @@
     #no {
       color: #666;
       background-color: #e0e0e0;
-      position: absolute;
     }
 
     #message {
@@ -105,9 +104,8 @@
 
   <div class="options">
     <div id="yes" class="option">TAK</div>
+    <div id="no" class="option">NIE</div>
   </div>
-
-  <div id="no" class="option">NIE</div>
 
   <div id="message">Yay! Idziemy na spacer! 🐕💖</div>
 
@@ -115,27 +113,24 @@
     id="dog"
     class="gif"
     src="https://cdn.pixabay.com/animation/2024/02/03/18/14/18-14-18-72_512.gif"
-    alt="Berneński pies pasterski robiący słodkie oczy"
+    alt="Słodki piesek"
   >
 
   <script>
-    const no = document.getElementById("no");
     const yes = document.getElementById("yes");
     const message = document.getElementById("message");
     const dog = document.getElementById("dog");
 
-    no.addEventListener("mouseover", () => {
-      const maxX = window.innerWidth - no.offsetWidth;
-      const maxY = window.innerHeight - no.offsetHeight;
-      no.style.left = Math.random() * maxX + "px";
-      no.style.top = Math.random() * maxY + "px";
-    });
-
     yes.addEventListener("click", () => {
+      // pokaż napis
       message.classList.add("show");
+
+      // serduszka
       for (let i = 0; i < 15; i++) createHeart();
+
+      // podskok pieska
       dog.classList.remove("jump"); 
-      void dog.offsetWidth;
+      void dog.offsetWidth; // trigger reflow
       dog.classList.add("jump");
     });
 
