@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Spacer?</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff;
+      text-align: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 64px;
+      margin-top: 60px;
+      margin-bottom: 40px;
+    }
+
+    .options {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      margin-bottom: 20px;
+    }
+
+    .option {
+      font-size: 48px;
+      font-weight: bold;
+      cursor: pointer;
+      user-select: none;
+      padding: 15px 30px;
+      border-radius: 20px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    #yes {
+      color: white;
+      background-color: hotpink;
+      box-shadow: 0 0 20px rgba(255, 105, 180, 0.6);
+    }
+
+    #yes:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 35px rgba(255, 105, 180, 0.9);
+    }
+
+    #no {
+      color: #666;
+      background-color: #e0e0e0;
+      position: absolute;
+    }
+
+    #message {
+      font-size: 48px;
+      color: hotpink;
+      margin-top: 20px;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: all 0.6s ease;
+    }
+
+    #message.show {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 30px;
+      animation: floatUp 2.5s ease-out forwards;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-300px);
+        opacity: 0;
+      }
+    }
+
+    /* Animacja podskakiwania pieska */
+    .gif {
+      width: 300px;
+      margin-top: 20px;
+      transition: transform 0.3s;
+    }
+
+    .gif.jump {
+      animation: jump 0.6s ease;
+    }
+
+    @keyframes jump {
+      0% { transform: translateY(0); }
+      30% { transform: translateY(-50px); }
+      60% { transform: translateY(0); }
+      100% { transform: translateY(0); }
+    }
+
+  </style>
+</head>
+<body>
+
+  <h1>Idziemy na spacer?</h1>
+
+  <div class="options">
+    <div id="yes" class="option">TAK</div>
+  </div>
+
+  <div id="no" class="option">NIE</div>
+
+  <div id="message">Yay! Idziemy na spacer! 🐕💖</div>
+
+  <img
+    id="dog"
+    class="gif"
+    src="https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif"
+    alt="Berneński pies pasterski robi słodkie oczka"
+  >
+
+  <script>
+    const no = document.getElementById("no");
+    const yes = document.getElementById("yes");
+    const message = document.getElementById("message");
+    const dog = document.getElementById("dog");
+
+    // NIE ucieka
+    no.addEventListener("mouseover", () => {
+      const maxX = window.innerWidth - no.offsetWidth;
+      const maxY = window.innerHeight - no.offsetHeight;
+
+      no.style.left = Math.random() * maxX + "px";
+      no.style.top = Math.random() * maxY + "px";
+    });
+
+    // TAK kliknięcie
+    yes.addEventListener("click", () => {
+      // Pokaż napis
+      message.classList.add("show");
+
+      // Serduszka
+      for (let i = 0; i < 15; i++) createHeart();
+
+      // Podskocz piesek
+      dog.classList.remove("jump"); // reset animacji
+      void dog.offsetWidth; // trigger reflow
+      dog.classList.add("jump");
+    });
+
+    // Funkcja tworzenia serduszek
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.innerText = "💖";
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      heart.style.animationDuration = 2 + Math.random() * 1.5 + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 3000);
+    }
+  </script>
+
+</body>
+</html>
