@@ -23,7 +23,7 @@
       display: flex;
       justify-content: center;
       gap: 60px;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
 
     .option {
@@ -51,6 +51,11 @@
       color: #666;
       background-color: #e0e0e0;
       position: absolute;
+    }
+
+    .gif {
+      width: 300px;
+      margin-top: 20px;
     }
 
     #message {
@@ -85,25 +90,6 @@
         opacity: 0;
       }
     }
-
-    /* Animacja podskakiwania pieska */
-    .gif {
-      width: 300px;
-      margin-top: 20px;
-      transition: transform 0.3s;
-    }
-
-    .gif.jump {
-      animation: jump 0.6s ease;
-    }
-
-    @keyframes jump {
-      0% { transform: translateY(0); }
-      30% { transform: translateY(-50px); }
-      60% { transform: translateY(0); }
-      100% { transform: translateY(0); }
-    }
-
   </style>
 </head>
 <body>
@@ -119,19 +105,16 @@
   <div id="message">Yay! Idziemy na spacer! 🐕💖</div>
 
   <img
-    id="dog"
     class="gif"
-    src="https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif"
-    alt="Berneński pies pasterski robi słodkie oczka"
+    src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif"
+    alt="Słodki piesek robiący oczka"
   >
 
   <script>
     const no = document.getElementById("no");
     const yes = document.getElementById("yes");
     const message = document.getElementById("message");
-    const dog = document.getElementById("dog");
 
-    // NIE ucieka
     no.addEventListener("mouseover", () => {
       const maxX = window.innerWidth - no.offsetWidth;
       const maxY = window.innerHeight - no.offsetHeight;
@@ -140,21 +123,14 @@
       no.style.top = Math.random() * maxY + "px";
     });
 
-    // TAK kliknięcie
     yes.addEventListener("click", () => {
-      // Pokaż napis
       message.classList.add("show");
 
-      // Serduszka
-      for (let i = 0; i < 15; i++) createHeart();
-
-      // Podskocz piesek
-      dog.classList.remove("jump"); // reset animacji
-      void dog.offsetWidth; // trigger reflow
-      dog.classList.add("jump");
+      for (let i = 0; i < 15; i++) {
+        createHeart();
+      }
     });
 
-    // Funkcja tworzenia serduszek
     function createHeart() {
       const heart = document.createElement("div");
       heart.className = "heart";
